@@ -6,8 +6,10 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :learning_machines, LearningMachinesWeb.Endpoint,
-  url: [host: "your-app-name.onrender.com", scheme: "https"],
+  url: [host: "learning-machines.fly.dev", scheme: "https", port: 443],
+  static_url: [host: "learning-machines.fly.dev"],
   cache_static_manifest: "priv/static/cache_manifest.json",
+  server: true,
   secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 config :phoenix, :serve_endpoints, true

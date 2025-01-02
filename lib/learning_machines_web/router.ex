@@ -18,6 +18,13 @@ defmodule LearningMachinesWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/counters", CounterLive.Index, :index
+    live "/counters/new", CounterLive.Index, :new
+    live "/counters/:id/edit", CounterLive.Index, :edit
+
+    live "/counters/:id", CounterLive.Show, :show
+    live "/counters/:id/show/edit", CounterLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

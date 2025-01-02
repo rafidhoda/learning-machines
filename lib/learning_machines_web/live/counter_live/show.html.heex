@@ -1,0 +1,26 @@
+<.header>
+  Counter {@counter.id}
+  <:subtitle>This is a counter record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/counters/#{@counter}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit counter</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Count">{@counter.count}</:item>
+</.list>
+
+<.back navigate={~p"/counters"}>Back to counters</.back>
+
+<.modal :if={@live_action == :edit} id="counter-modal" show on_cancel={JS.patch(~p"/counters/#{@counter}")}>
+  <.live_component
+    module={LearningMachinesWeb.CounterLive.FormComponent}
+    id={@counter.id}
+    title={@page_title}
+    action={@live_action}
+    counter={@counter}
+    patch={~p"/counters/#{@counter}"}
+  />
+</.modal>

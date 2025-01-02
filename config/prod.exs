@@ -6,7 +6,11 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :learning_machines, LearningMachinesWeb.Endpoint,
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: "your-app-name.onrender.com", scheme: "https"],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
+
+config :phoenix, :serve_endpoints, true
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: LearningMachines.Finch

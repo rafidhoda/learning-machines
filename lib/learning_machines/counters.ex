@@ -101,4 +101,34 @@ defmodule LearningMachines.Counters do
   def change_counter(%Counter{} = counter, attrs \\ %{}) do
     Counter.changeset(counter, attrs)
   end
+
+  @doc """
+  Increment the count of a counter by 1.
+  """
+  def increment_counter(%Counter{} = counter) do
+    updated_counter =
+      counter
+      |> Counter.changeset(%{count: counter.count + 1})
+      |> Repo.update!()
+
+    # Broadcast the updated counter to all subscribers
+    Phoenix.PubSub.broadcast(LearningMachines.PubSub, "counters:#{counter.id}", {:updated_counter, updated_counter})
+
+    updated_counter
+  end
+
+  @doc """
+  Decrement the count of a counter by 1.
+  """
+  def decrement_counter(%Counter{} = counter) do
+    updated_counter =
+      counter
+      |> Counter.changeset(%{count: counter.count - 1})
+      |> Repo.update!()
+    
+    # Broadcast the updated counter to all subscribers
+    Phoenix.PubSub.broadcast(LearningMachines.PubSub, "counters:#{counter.id}", {:updated_counter, updated_counter})
+
+    updated_counter
+  end
 end
